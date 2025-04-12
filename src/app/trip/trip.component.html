@@ -1,0 +1,37 @@
+<div class="container mt-4 mb-10">
+    <form (ngSubmit)="addTrip()" class="row g-3">
+        <div class="col-md-6">
+            <input [(ngModel)]="start" type="text" class="form-control focus-ring focus-ring-light"
+                placeholder="Start Point" aria-label="Start Point" [ngModelOptions]="{standalone: true}">
+        </div>
+        <div class="col-md-6">
+            <input [(ngModel)]="end" type="text" class="form-control focus-ring focus-ring-light"
+                placeholder="End Point" aria-label="End Point" [ngModelOptions]="{standalone: true}">
+        </div>
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary" [disabled]="!start || !end">Add trip</button>
+        </div>
+    </form>
+
+
+    <div class="timeline mt-5">
+        <ng-container *ngFor="let trip of trips; let i = index">
+            <div class="trip-wrapper" [ngClass]="getTripLevel(i)">
+                <div class="dot-label-wrapper">
+                    <div class="dot"></div>
+                    <span class="trip-label">{{ getCode(trip.start) }}-{{ getCode(trip.end) }}</span>
+                </div>
+
+                <div class="line" [ngClass]="{
+                'continued': isContinued(i),
+                'disconnected': !isContinued(i),
+                'duplicate': isDuplicate(i)
+              }">
+                    <span class="arrow" *ngIf="!isContinued(i)">➤</span>
+                </div>
+
+            </div>
+        </ng-container>
+    </div>
+
+</div>
